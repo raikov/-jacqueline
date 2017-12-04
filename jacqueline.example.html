@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <title>Untitled</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+  <script src="datepicker.min.js"></script>  
+  <script src="jacqueline.js"></script>
+
+  <link rel="stylesheet" href="datepicker.min.css" type="text/css">
+
+  <style>
+
+  *{
+    font:14px sans-serif
+  }
+
+    label{
+      display: block;
+      padding: 10px 0 3px;
+    }
+
+    input{
+      padding: 6px;
+       border: 1px solid #ccc
+    }
+    [contenteditable]{
+      padding: 6px;
+      width: 400px;
+      border: 1px solid #ccc;
+      height: 100px;
+    }
+
+    .jacqueline-component{
+      display: block;
+      padding: 10px;
+      border: 1px solid #eee;
+      width: 500px;
+      margin: 10px 0;
+    }
+
+  </style>
+</head>
+
+<body>
+<div id="log" style="position: fixed;top: 20px;right: 20px;padding: 20px;border:1px solid #eee;width: 400px;" />
+<script>
+
+
+  setInterval(function(){
+    document.getElementById('log').innerHTML = JSON.stringify(test)
+    .replace(/,/g, ',<br>')
+    .replace(/{/g, '{<br>')
+    .replace(/}/g, '<br>}')
+  }, 100)
+
+
+
+
+
+
+
+
+
+
+
+
+
+  test = {
+    title:'test',
+    opa:1,
+    rich:'dsa asd asd ds',
+    date:'12',
+    data:[
+      {id:'asd2qwe', content:'asdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'1s223', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d232', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d233', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12sd234', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'122s35', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+    ],
+    select:[
+      {id:'asd2qwe', content:'asdasdd as ad asd a', date:'31397'},
+      {id:'1s223', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+      {id:'12d232', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+      {id:'12d233', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+      {id:'12sd234', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+      {id:'122s35', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+    ]
+  }
+
+
+
+
+
+
+
+
+
+  config = {
+    title:{
+      method:'input',
+      placeholder:'Some Title',
+      label:'Title:'
+    },
+    date:{
+      method:'date',
+      placeholder:'Some date',
+      label:'Date:'
+    },
+    opa:{
+      method:'number',
+      placeholder:'Number',
+      label:'Do Number:'
+    },
+    rich:{
+      method:'richtext',
+      placeholder:'Some text',
+      label:'Do text:'
+    },
+    data:{
+      method:'posts',
+      scheme:{
+        content:{
+          method:'richtext',
+          placeholder:'Some text',
+          label:'Do text:'
+        },
+        date:{
+          method:'date',
+          placeholder:'Some date',
+          label:'dai data:',
+          format:'MMM Do YY'
+        }
+      }
+    },
+    select:{
+      method:'select',
+      value:'id',
+      displayValue:'content',
+      label:'Choose',
+      selected:function(curr){
+        return curr.id == "12d232"
+      }
+    }
+  }
+
+  onload = function(){
+
+    window.jq({
+      data:test,
+      config:config,
+      root:document.body
+    })
+
+  }
+
+</script>
+
+
+
+</body>
+
+</html>
