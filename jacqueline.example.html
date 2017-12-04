@@ -58,44 +58,28 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-  test = {
+  testData = {
     title:'test',
     opa:1,
     rich:'dsa asd asd ds',
     date:'12',
     data:[
       {id:'asd2qwe', content:'asdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
-      {id:'1s223', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
-      {id:'12d232', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
-      {id:'12d233', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
-      {id:'12sd234', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
-      {id:'122s35', content:'asd fs sdfsdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'1s223', content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque</strong> consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d232', content:'<h4>Lorem ipsum dolor sit amet</h4>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d233', content:'<h3>Lorem ipsum dolor sit amet</h3>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12sd234', content:'<em>Lorem ipsum dolor sit amet</em>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'122s35', content:'<u><span style="text-decoration: line-through">Lorem ipsum dolor sit amet</span></u>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
     ],
     select:[
-      {id:'asd2qwe', content:'asdasdd as ad asd a', date:'31397'},
-      {id:'1s223', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
-      {id:'12d232', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
-      {id:'12d233', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
-      {id:'12sd234', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
-      {id:'122s35', content:'asd fs sdfsdasdd as ad asd a', date:'2342'},
+      {id:'asd2qwe', content:'Option 1', date:'31397'},
+      {id:'1s223', content:'Option 2', date:'2342'},
+      {id:'12d232', content:'Option 3', date:'2342'},
+      {id:'12d233', content:'Option 4', date:'2342'},
+      {id:'12sd234', content:'Option 5', date:'2342'},
+      {id:'122s35', content:'Option 6', date:'2342'},
     ]
   }
-
-
-
-
-
-
 
 
 
@@ -107,30 +91,30 @@
     },
     date:{
       method:'date',
-      placeholder:'Some date',
+      placeholder:'Enter your date',
       label:'Date:'
     },
     opa:{
       method:'number',
       placeholder:'Number',
-      label:'Do Number:'
+      label:'Favourite Number:'
     },
     rich:{
       method:'richtext',
       placeholder:'Some text',
-      label:'Do text:'
+      label:'Richtext Example:'
     },
     data:{
       method:'posts',
       scheme:{
         content:{
           method:'richtext',
-          placeholder:'Some text',
+          placeholder:'Richtext',
           label:'Do text:'
         },
         date:{
           method:'date',
-          placeholder:'Some date',
+          placeholder:'Another date',
           label:'dai data:',
           format:'MMM Do YY'
         }
@@ -150,7 +134,7 @@
   onload = function(){
 
     window.jq({
-      data:test,
+      data:testData,
       config:config,
       root:document.body
     })
