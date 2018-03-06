@@ -45,12 +45,12 @@
 </head>
 
 <body>
-<div id="log" style="position: fixed;top: 20px;right: 20px;padding: 20px;border:1px solid #eee;width: 400px;" />
+<div id="log" style="position: fixed;top: 20px;right: 20px;padding: 20px;border:1px solid #eee;width: 400px;" ></div>
 <script>
 
 
   setInterval(function(){
-    document.getElementById('log').innerHTML = JSON.stringify(test)
+    document.getElementById('log').innerHTML = JSON.stringify(testData)
     .replace(/,/g, ',<br>')
     .replace(/{/g, '{<br>')
     .replace(/}/g, '<br>}')
@@ -133,7 +133,7 @@
 
   onload = function(){
 
-    window.jq({
+    jq({
       data:testData,
       config:config,
       root:document.body
