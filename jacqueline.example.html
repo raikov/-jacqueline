@@ -14,7 +14,8 @@
   <style>
 
   *{
-    font:14px sans-serif
+    font:14px sans-serif;
+    box-sizing: border-box;
   }
 
     label{
@@ -41,20 +42,40 @@
       margin: 10px 0;
     }
 
+    #log{
+        position: fixed;top: 0;left: 0;padding: 20px;border:1px solid #eee;width: 20%;
+        height: 100%;
+        font-size:12px;
+        color: #116FCC;
+        font-family: monospace;
+        overflow: auto;
+    }
+
+    .col1{
+         position: fixed;top: 0;left: 20%;padding: 20px;border:1px solid #eee;width: 40%;height: 100%;overflow: auto;
+    }
+    .col2{
+         position: fixed;top: 0;right: 0;padding: 20px;border:1px solid #eee;width: 40%; height: 100%;overflow: auto;  
+    }
+
   </style>
 </head>
 
 <body>
-<div id="log" style="position: fixed;top: 20px;right: 20px;padding: 20px;border:1px solid #eee;width: 400px;" ></div>
+<div id="log"></div>
 <script>
 
 
   setInterval(function(){
-    document.getElementById('log').innerHTML = JSON.stringify(testData)
-    .replace(/,/g, ',<br>')
-    .replace(/{/g, '{<br>')
-    .replace(/}/g, '<br>}')
+      var final =   JSON.stringify(testData)
+                    .replace(/,/g, ',<br>')
+                    .replace(/{/g, '{<br>')
+                    .replace(/}/g, '<br>}');
+
+    document.getElementById('log').innerHTML = 'Log: <br>'+  final
   }, 100)
+
+
 
 
 
@@ -133,16 +154,26 @@
 
   onload = function(){
 
-    jq({
+    Jacqueline.ui({
       data:testData,
       config:config,
-      root:document.body
+      root:document.querySelector('#ui-demo')
+    });
+
+    Jacqueline.admin({
+      data:testData,
+      root:document.querySelector('#admin-demo')
     })
 
   }
 
 </script>
 
+<div class="col1">
+    <div id="admin-demo"></div>
+</div>
+
+<div class="col2"><div id="ui-demo"></div>  </div>
 
 
 </body>
