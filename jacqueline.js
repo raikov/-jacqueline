@@ -145,17 +145,45 @@ window.Jacqueline = window.Jacqueline || {};
             root.className = 'jq-admin-root';
             return root;
         },
+        validateKey:function(newValue, object){
+            if(!newValue) {console.warn("Value must not be empty");return false; }
+            newValue = newValue.trim()
+            if(!newValue) {console.warn("Value must not be empty");return false; }
+            for(var i in object){
+                if(i == newValue){
+                    console.warn("Value must be unique in it's scope");
+                    return false;
+                }
+            }
+            return newValue;
+        },
         createItem:function(key,value, obj){
             var li = document.createElement('li');
             if(obj.constructor !== [].constructor){
                 var lb = document.createElement('input');
                 lb.value = key;
+                var scope = this;
+                lb.onkeydown = function(){
+                    this._prev = this.value;
+                }
                 lb.oninput = function(){
+                    var val = scope.validateKey(this.value, obj);
+                    clearTimeout(this._clearTime)
+                    if(!val){
+                        (function(el){
+                            el._clearTime = setTimeout(function(){
+                                el.value = el._prev
+                            }, 777)
+                        })(this)
+                        return;
+                    }
+
                     delete obj[lb._jqdata.key];
 
-                    lb._jqdata.key = this.value;
+                    lb._jqdata.key = val;
 
-                    obj[this.value] = lb._jqdata.valueNode.value;
+
+                    obj[val] = lb._jqdata.valueNode.value ? lb._jqdata.valueNode.value : lb._jqdata.valueNode;
                 }
             }
             else{
@@ -170,6 +198,7 @@ window.Jacqueline = window.Jacqueline || {};
             if(value && typeof value === 'object'){
                 var root = this.createRoot();
                 li.appendChild(this.rendObject(value, root));
+                lb._jqdata.valueNode = value
                 return li;
             }
             else{
@@ -177,8 +206,8 @@ window.Jacqueline = window.Jacqueline || {};
                 inp.id = this.id();
                 inp.value = value;
                 lb._jqdata.valueNode = inp
-                this.map[inp.id] = inp;
                 inp.oninput = function(){
+
                     obj[lb._jqdata.key] = this.value;
                 }
                 li.appendChild(inp);
@@ -206,7 +235,6 @@ window.Jacqueline = window.Jacqueline || {};
             }
             return root;
         },
-        map:{},
         rend:function(opt){
             opt.root.appendChild(this.rendObject(opt.data))
         }

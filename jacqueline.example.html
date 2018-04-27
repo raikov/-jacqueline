@@ -8,6 +8,8 @@
   <script src="https://momentjs.com/downloads/moment.js"></script>
   <script src="datepicker.min.js"></script>  
   <script src="jacqueline.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
 
   <link rel="stylesheet" href="datepicker.min.css" type="text/css">
 
@@ -49,13 +51,16 @@
         color: #116FCC;
         font-family: monospace;
         overflow: auto;
+        white-space: nowrap;
     }
+
+
 
     .col1{
          position: fixed;top: 0;left: 20%;padding: 20px;border:1px solid #eee;width: 40%;height: 100%;overflow: auto;
     }
     .col2{
-         position: fixed;top: 0;right: 0;padding: 20px;border:1px solid #eee;width: 40%; height: 100%;overflow: auto;  
+         position: fixed;top: 0;right: 0;padding: 20px;border:1px solid #eee;width: 40%; height: 100%;overflow: auto;
     }
 
   </style>
@@ -68,11 +73,12 @@
 
   setInterval(function(){
       var final =   JSON.stringify(testData)
-                    .replace(/,/g, ',<br>')
-                    .replace(/{/g, '{<br>')
-                    .replace(/}/g, '<br>}');
+                    .replace(/",/g, '",\r\n')
+                    .replace(/\,{/g, ',\r\n{')
+                    .replace(/{/g, '{\r\n')
+                    .replace(/}/g, '\r\n}');
 
-    document.getElementById('log').innerHTML = 'Log: <br>'+  final
+    document.getElementById('log').innerText = 'Log: \r\n'+  final
   }, 100)
 
 
@@ -170,10 +176,14 @@
 </script>
 
 <div class="col1">
+    <h3>Admin</h3>
     <div id="admin-demo"></div>
 </div>
 
-<div class="col2"><div id="ui-demo"></div>  </div>
+<div class="col2">
+    <h3>Front-end</h3>
+    <div id="ui-demo"></div>
+</div>
 
 
 </body>
