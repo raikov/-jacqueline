@@ -51,7 +51,7 @@
         color: #116FCC;
         font-family: monospace;
         overflow: auto;
-        white-space: nowrap;
+        white-space: pre;
     }
 
 
@@ -72,13 +72,10 @@
 
 
   setInterval(function(){
-      var final =   JSON.stringify(testData)
-                    .replace(/",/g, '",\r\n')
-                    .replace(/\,{/g, ',\r\n{')
-                    .replace(/{/g, '{\r\n')
-                    .replace(/}/g, '\r\n}');
 
-    document.getElementById('log').innerText = 'Log: \r\n'+  final
+
+    document.getElementById('log').innerHTML = 'Log: \r\n'+  JSON.stringify(testData, undefined, 2).replace(/</g,'&lt;');
+
   }, 100)
 
 
