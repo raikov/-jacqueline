@@ -31,14 +31,15 @@ window.Jacqueline = window.Jacqueline || {};
                 return input;
             },
             date:function(object, key, config){
-                var input = document.createElement('input');
-                var format = config.format || "MMM Do YYYY";
-                input.value = moment(object[key]).format(format)
+                var input = document.createElement('div');
+                var format = config.format || "dddd, MMMM Do YYYY";
+                input.innerHTML = moment(object[key]).format(format)
                 $(input).datepicker({
-                    format:config.format || "MMM Do YYYY"
+                    format:format
                 }).on('pick.datepicker', function(e){
+                    e.preventDefault();
                     object[key] = e.date.toISOString();
-                    input.value = moment(object[key]).format(format)
+                    input.innerHTML = moment(e.date).format(format)
                 });
                 return input;
             },
@@ -56,17 +57,18 @@ window.Jacqueline = window.Jacqueline || {};
                 return input;
             },
             select:function(object, key, conf){
+
                 var input = document.createElement('select');
                 input.value = object[key];
                 console.log(object, key, conf)
                 var i = 0;
-                for( ; i < object.data.length; i++){
+                for( ; i < object[key].length; i++){
                     var option = document.createElement('option');
-                    option.value = object.data[i][conf.value]
-                    option.innerText = object.data[i][conf.displayValue];
+                    option.value = object[key][i][conf.value]
+                    option.innerText = object[key][i][conf.displayValue];
                     input.appendChild(option)
                     if(conf.selected){
-                        if(conf.selected.call(object.data[i], object.data[i])){
+                        if(conf.selected.call(object[key][i], object[key][i])){
                             option.selected = true;
                         }
                     }
@@ -157,7 +159,11 @@ window.Jacqueline = window.Jacqueline || {};
             }
             return newValue;
         },
-        createItem:function(key,value, obj){
+        createItemCTRL:function(li){
+            var el = document.crateElement('div');
+            el.className = 'controller'
+        },
+        createItem:function(key, value, obj){
             var li = document.createElement('li');
             if(obj.constructor !== [].constructor){
                 var lb = document.createElement('input');
@@ -177,18 +183,15 @@ window.Jacqueline = window.Jacqueline || {};
                         })(this)
                         return;
                     }
-
                     delete obj[lb._jqdata.key];
-
                     lb._jqdata.key = val;
-
-
                     obj[val] = lb._jqdata.valueNode.value ? lb._jqdata.valueNode.value : lb._jqdata.valueNode;
                 }
             }
             else{
                var lb = document.createElement('label');
                 lb.innerHTML = key;
+                lb.className = 'jq-array-index';
             }
 
             li.appendChild(lb);
@@ -224,19 +227,66 @@ window.Jacqueline = window.Jacqueline || {};
         rendObject: function(obj, root){
             var i, root = root || this.createRoot();
             if(typeof obj.length !== 'undefined'){
+                root.className += ' jq-root-array';
                 for(i=0; i<obj.length; i++){
                     root.appendChild(this.createItem(i, obj[i], obj))
                 }
             }
             else if(obj instanceof Object && obj.constructor === Object){
-                 for(i in obj){
+                root.className += ' jq-root-object-literal';
+                for(i in obj){
                     root.appendChild(this.createItem(i, obj[i], obj))
                 }
             }
+            root._jqdata = {object:obj} ;
             return root;
         },
+        _normalizeIndexes: function(from, to){
+            if(to === from) to = null;
+            console.log(from.children)
+            Array.from(from.children).forEach(function(el, i){
+                el.querySelector('label').innerHTML = i
+            });
+            if(to) {
+                Array.from(to.children).forEach(function(el, i){
+                    el.querySelector('label').innerHTML = i
+                });
+            }
+        },
+        createSortables: function(root){
+            var scope = this;
+            Array.from(root.querySelectorAll('.jq-root-array')).forEach(function(el){
+                new Sortable(el, {
+                    group: 'shared',
+                    animation: 150,
+                    onSort: function (evt,b,c) {
+                        var oldIndex = evt.oldIndex;
+                        var newIndex = evt.newIndex;
+                        scope.arrayMove(evt.item.parentNode._jqdata.object, oldIndex, newIndex) ;
+                        scope._normalizeIndexes(evt.from, evt.to);
+                    }
+                });
+            });
+        },
+        arrayMove: function(arr, old_index, new_index) {
+            while (old_index < 0) {
+                old_index += arr.length;
+            }
+            while (new_index < 0) {
+                new_index += arr.length;
+            }
+            if (new_index >= arr.length) {
+                var k = new_index - arr.length + 1;
+                while (k--) {
+                    arr.push(undefined);
+                }
+            }
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr;
+        },
         rend:function(opt){
-            opt.root.appendChild(this.rendObject(opt.data))
+            opt.root.appendChild(this.rendObject(opt.data));
+            this.createSortables(opt.root)
         }
     }
     JacquelineAdmin.prototype.rend.prototype = JacquelineAdmin.prototype;

@@ -1,0 +1,24 @@
+
+.jq-admin-root*{
+    box-sizing: border-box;
+}
+
+.jq-admin-root li{
+    list-style: none;
+    border: 1px solid #eee;
+    margin: 5px;
+    padding: 5px;
+}
+
+.jq-admin-root input{
+    padding: 5px 10px;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    width: 45%;
+}
+
+.jq-admin-root input:focus{
+    box-shadow: inset 0 0 2px #DBDBDB;
+}

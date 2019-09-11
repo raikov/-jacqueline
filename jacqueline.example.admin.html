@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <title>Untitled</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+  <script src="datepicker.min.js"></script>
+  <script src="Sortable.min.js"></script>
+  <script src="jacqueline.js"></script>
+
+
+  <link rel="stylesheet" href="datepicker.min.css" type="text/css">
+  <link rel="stylesheet" href="jq.css" type="text/css">
+  <link rel="stylesheet" href="demo.css" type="text/css">
+
+
+</head>
+
+<body>
+<div id="log"></div>
+<script>
+
+
+  setInterval(function(){
+
+
+    document.getElementById('log').innerHTML = 'Log: \r\n'+  JSON.stringify(testData, undefined, 2).replace(/</g,'&lt;');
+
+  }, 100)
+
+
+
+
+
+  testData = {
+    title:'test',
+    opa:1,
+    rich:'dsa asd asd ds',
+    date:'12',
+    data:[
+      {id:'asd2qwe', content:'asdasdd as ad asd a', date:'2017-12-06T22:00:00.000Z'},
+      {id:'1s223', content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque</strong> consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d232', content:'<h4>Lorem ipsum dolor sit amet</h4>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12d233', content:'<h3>Lorem ipsum dolor sit amet</h3>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'12sd234', content:'<em>Lorem ipsum dolor sit amet</em>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+      {id:'122s35', content:'<u><span style="text-decoration: line-through">Lorem ipsum dolor sit amet</span></u>, consectetur adipiscing elit. Pellentesque consectetur massa a lobortis tincidunt. Suspendisse id nisi aliquet, cursus diam nec, gravida purus.', date:'2017-12-06T22:00:00.000Z'},
+    ],
+    select:[
+      {id:'asd2qwe', content:'Option 1', date:'31397'},
+      {id:'1s223', content:'Option 2', date:'2342'},
+      {id:'12d232', content:'Option 3', date:'2342'},
+      {id:'12d233', content:'Option 4', date:'2342'},
+      {id:'12sd234', content:'Option 5', date:'2342'},
+      {id:'122s35', content:'Option 6', date:'2342'},
+    ]
+  }
+
+
+
+  config = {
+    title:{
+      method:'input',
+      placeholder:'Some Title',
+      label:'Title:'
+    },
+    date:{
+      method:'date',
+      placeholder:'Enter your date',
+      label:'Date:'
+    },
+    opa:{
+      method:'number',
+      placeholder:'Number',
+      label:'Favourite Number:'
+    },
+    rich:{
+      method:'richtext',
+      placeholder:'Some text',
+      label:'Richtext Example:'
+    },
+    data:{
+      method:'posts',
+      scheme:{
+        content:{
+          method:'richtext',
+          placeholder:'Richtext',
+          label:'Do text:'
+        },
+        date:{
+          method:'date',
+          placeholder:'Another date',
+          label:'dai data:',
+          format:'MMM Do YY'
+        }
+      }
+    },
+    select:{
+      method:'select',
+      value:'id',
+      displayValue:'content',
+      label:'Choose',
+      selected:function(curr){
+        return curr.id == "12d232"
+      }
+    }
+  }
+
+  onload = function(){
+
+
+
+    Jacqueline.admin({
+      data:testData,
+      root:document.querySelector('#admin-demo')
+    })
+
+  }
+
+</script>
+
+<div class="col1">
+    <h3>Admin</h3>
+    <div id="admin-demo"></div>
+</div>
+
+
+
+
+</body>
+
+</html>
